@@ -68,6 +68,8 @@ if ! chmod 0700 "${SSH_DIR}" ~/.ssh; then
     exit 1
 fi
 
+echo "${INPUT_PORT} ${INPUT_HOST}"
+
 # Add host to known hosts
 if ! ssh-keyscan -p "${INPUT_PORT}" -H "${INPUT_HOST}" >> "${SSH_DIR}/known_hosts"; then
     echo "Error: Failed to add host to known hosts"
