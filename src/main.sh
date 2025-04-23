@@ -47,7 +47,7 @@ fi
 
 ## Setup Script
 
-SSH_DIR="/root/.ssh"
+SSH_DIR="${HOME}/.ssh"
 
 echo "::group::Starting Stack Deploy Action ${GITHUB_ACTION_REF}"
 echo "User: $(whoami)"
