@@ -57,9 +57,23 @@ echo "Home Directory: ${HOME}"
 echo "SSH Directory: ${SSH_DIR}"
 echo "Deploy Mode: ${INPUT_MODE}"
 
-mkdir -p "${SSH_DIR}" ~/.ssh
-chmod 0700 "${SSH_DIR}" ~/.ssh
-ssh-keyscan -p "${INPUT_PORT}" -H "${INPUT_HOST}" >> "${SSH_DIR}/known_hosts"
+# Create SSH directory and set permissions
+if ! mkdir -p "${SSH_DIR}" ~/.ssh; then
+    echo "Error: Failed to create SSH directories"
+    exit 1
+fi
+
+if ! chmod 0700 "${SSH_DIR}" ~/.ssh; then
+    echo "Error: Failed to set SSH directory permissions"
+    exit 1
+fi
+
+# Add host to known hosts
+if ! ssh-keyscan -p "${INPUT_PORT}" -H "${INPUT_HOST}" >> "${SSH_DIR}/known_hosts"; then
+    echo "Error: Failed to add host to known hosts"
+    exit 1
+fi
+
 echo "::endgroup::"
 
 ## Setup Authentication
